@@ -23,6 +23,8 @@ grunt.loadNpmTasks('grunt-connect-rewrite');
 
 #### Rules Configuration
 In your project's Gruntfile, add a section named `rules` to your existing connect definition.
+Please note that unlike options, rules cannot be set per server, so the rules attribute must always
+be nested directly under 'connect'.
 
 ```js
 grunt.initConfig({
@@ -53,7 +55,8 @@ connect: {
         options: {
             middleware: function (connect) {
                 return [
-                    rewriteRulesSnippet
+                    rewriteRulesSnippet, // RewriteRules support
+                    connect.static(require('path').resolve(options.base)) // mount filesystem
                 ];
             }
         }
