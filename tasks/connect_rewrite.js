@@ -12,7 +12,10 @@ var utils = require('../lib/utils');
 
 module.exports = function (grunt) {
     grunt.registerTask('configureRewriteRules', 'Configure connect rewriting rules.', function () {
-        var rules = grunt.config('connect.rules') || {};
+        var options = this.options({
+            rulesProvider: 'connect.rules'
+        });
+        var rules = grunt.config(options.rulesProvider) || {};
         Object.keys(rules).forEach(function (from) {
             var to = rules[from];
             if (utils.registerRule({from: from, to: to})) {
