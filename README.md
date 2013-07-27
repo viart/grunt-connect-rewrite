@@ -1,6 +1,6 @@
 # grunt-connect-rewrite
 
-> This plugin provides RewriteRules middleware for the Grunt Connect.
+> This plugin provides RewriteRules middleware for the Grunt Connect / Express.
 
 ## Getting Started
 This plugin requires Grunt `~0.4.1`
@@ -105,4 +105,5 @@ grunt.registerTask('server', function (target) {
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+0.1.1 Add possibility to read settings from custom grunt config path
 0.1.0 Initial Release
