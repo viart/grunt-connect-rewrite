@@ -37,6 +37,7 @@
     "grunt": "~0.4.1"
   },
   "keywords": [
+    "gruntplugin",
     "grunt-contrib-connect",
     "grunt-express",
     "modrewrite",

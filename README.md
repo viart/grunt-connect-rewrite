@@ -105,5 +105,5 @@ grunt.registerTask('server', function (target) {
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
-0.1.1 Add possibility to read settings from custom grunt config path
-0.1.0 Initial Release
+* 2013.07.27 `v0.1.1` Add possibility to read settings from custom grunt config path
+* 2013.04.12 `v0.1.0` Initial Release
