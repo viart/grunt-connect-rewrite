@@ -42,6 +42,32 @@ grunt.initConfig({
 })
 ```
 
+You may also optionally read rules from a different grunt config, like so:
+
+```js
+grunt.initConfig({
+    express: {
+        options: {
+            port: 9000
+        },
+        server: {
+            hostname: 'localhost'
+        },
+        rules: {
+            '^/index_dev.html$': '/src/index.html',
+            '^/js/(.*)$': '/src/js/$1',
+            '^/css/(.*)$': '/public/css/$1'
+        }
+    },
+    configureRewriteRules: {
+        options: {
+            rulesProvider: 'express.rules'
+        }
+    }
+}
+})
+```
+
 #### Adding the middleware
 Include helper to use in the middleware (add this line to the top of the grunt file):
 ```js
