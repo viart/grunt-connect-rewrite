@@ -79,7 +79,7 @@ Add the RewriteRules snippet to the connect option middleware hook
 connect: {
     development: {
         options: {
-            middleware: function (connect) {
+            middleware: function (connect, options) {
                 return [
                     rewriteRulesSnippet, // RewriteRules support
                     connect.static(require('path').resolve(options.base)) // mount filesystem
