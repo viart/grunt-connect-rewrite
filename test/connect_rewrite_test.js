@@ -69,5 +69,60 @@ exports.connect_rewrite = {
         test.equal(wasCompleted, 1, 'Should not block Connect middleware.');
 
         test.done();
+    },
+    testRedirectWithoutRules: function (test) {
+        var _d = utils.dispatcher,
+            wasCompleted = 0,
+            wasDispached = 0;
+
+        test.expect(2);
+
+        utils.dispatcher = function () { wasDispached++; };
+
+        utils.redirectRequest({url: '/'}, null, function () { wasCompleted ++; });
+        test.equal(wasCompleted, 1, 'Should not block Connect middleware.');
+        test.equal(wasDispached, 0, 'Should not try to dispatch without RewriteRules.');
+
+        utils.dispatcher = _d;
+
+        test.done();
+    },
+    testRedirectRegExpRule: function (test) {
+        var req = {},
+            wasCompleted = 0;
+        var res = {
+            writeHead: function(status, headers) {
+                this.status = status;
+                this.headers = headers;
+            },
+            end: function() {
+            }
+        };
+        res.status = 0;
+        res.headers = {};
+
+        test.expect(8);
+
+        test.equal(utils.registerRule({from: '^/fr[o0]m-([^-]+)-(\\d+)\\.html$', to: '/to-$1-$2.html'}), true);
+        test.equal(utils.rules().length, 1);
+
+        req.url = '/fr0m-s0me-123.html';
+        utils.redirectRequest(req, res, function () { wasCompleted ++; });
+        test.equal(res.status, 302, 'Should change statuscode.');
+        test.same(res.headers, {'Location': '/to-s0me-123.html'},
+                   'Should set location.');
+        test.equal(wasCompleted, 0, 'Should block Connect middleware.');
+
+        req.url = '/error-case.html';
+        wasCompleted = 0;
+        res.status = 0;
+        res.headers = {};
+        utils.redirectRequest(req, res, function () { wasCompleted++; });
+        test.equal(res.status, 0, 'Should not change statuscode.');
+        test.same(res.headers, {},
+                   'Should set location.');
+        test.equal(wasCompleted, 1, 'Should not block Connect middleware.');
+
+        test.done();
     }
 };
