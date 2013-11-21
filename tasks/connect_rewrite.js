@@ -15,11 +15,11 @@ module.exports = function (grunt) {
         var options = this.options({
             rulesProvider: 'connect.rules'
         });
-        var rules = grunt.config(options.rulesProvider) || {};
-        Object.keys(rules).forEach(function (from) {
-            var to = rules[from];
-            if (utils.registerRule({from: from, to: to})) {
-                grunt.log.ok('Rewrite rule created for: [' + from + ' -> ' + to + '].');
+        (grunt.config(options.rulesProvider) || []).forEach(function (rule) {
+            rule = rule || {};
+            var registeredRule = utils.registerRule({from: rule.from, to: rule.to, redirect: rule.redirect});
+            if (registeredRule) {
+                grunt.log.ok('Rewrite rule created for: [' + registeredRule + '].');
             } else {
                 grunt.log.error('Wrong rule given.');
             }

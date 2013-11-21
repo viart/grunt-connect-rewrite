@@ -34,11 +34,12 @@ module.exports = function (grunt) {
                 // change this to '0.0.0.0' to access the server from outside
                 hostname: 'localhost'
             },
-            rules: {
-                '^/index_dev.html$': '/src/index.html',
-                '^/js/(.*)$': '/src/js/$1',
-                '^/css/(.*)$': '/public/css/$1'
-            }
+            rules: [
+                {from: '^/index_dev.html$', to: '/src/index.html'},
+                {from: '^/js/(.*)$', to: '/src/js/$1'},
+                {from: '^/css/(.*)$', to: '/public/css/$1'},
+                {from: '^/old_stuff/(.*)$', to: '/new_cool_stuff/$1', redirect: 'permanent'}
+            ]
         },
 
         // Unit tests.
