@@ -1,7 +1,7 @@
 {
   "name": "grunt-connect-rewrite",
   "description": "Provides RewriteRules middleware for the grunt connect and express.",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "homepage": "https://github.com/viart/grunt-connect-rewrite",
   "author": {
     "name": "Artem Vitiuk",
