@@ -112,3 +112,5 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 * 2013.11.21 `v0.2.0` Add support for Browser's redirects (HTTP 301/302)
 * 2013.07.27 `v0.1.1` Add possibility to read settings from custom grunt config path
 * 2013.04.12 `v0.1.0` Initial Release
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/viart/grunt-connect-rewrite/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
