@@ -105,6 +105,10 @@ grunt.registerTask('server', function (target) {
 });
 ```
 
+### Debugging rules
+
+Setting `debug: true` on `connect.options` will print `grunt.log` messages when rewrite happens. The message will explain which __from__ rule was matched and what was the result of the rewrite.
+
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 

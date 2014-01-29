@@ -129,5 +129,25 @@ exports.connect_rewrite = {
         test.equal(res.wasEnded, 0, 'Response should not be ended.');
 
         test.done();
+    },
+    testLogging: function (test) {
+        var req = {};
+        utils.log = {
+            wasCalled: false,
+            ok: function () {
+                this.wasCalled = true;
+            }
+        };
+        utils.debugging = true;
+        test.expect(1);
+
+        utils.registerRule({from: '^/fr[o0]m-([^-]+)-(\\d+)\\.html$', to: '/to-$1-$2.html'});
+
+        req.url = '/fr0m-s0me-123.html';
+        utils.rewriteRequest(req, res, function () { });
+
+        test.equal(utils.log.wasCalled, true);
+
+        test.done();
     }
 };
