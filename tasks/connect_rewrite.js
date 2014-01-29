@@ -15,6 +15,7 @@ module.exports = function (grunt) {
         var options = this.options({
             rulesProvider: 'connect.rules'
         });
+        utils.log = grunt.log;
         (grunt.config(options.rulesProvider) || []).forEach(function (rule) {
             rule = rule || {};
             var registeredRule = utils.registerRule({from: rule.from, to: rule.to, redirect: rule.redirect});

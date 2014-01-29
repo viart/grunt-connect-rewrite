@@ -1,7 +1,11 @@
-# grunt-connect-rewrite v0.2.0 [![Build Status](https://travis-ci.org/viart/grunt-connect-rewrite.png?branch=master)](https://travis-ci.org/viart/grunt-connect-rewrite)
+# grunt-connect-rewrite v0.2.1 [![Build Status](https://travis-ci.org/viart/grunt-connect-rewrite.png?branch=master)](https://travis-ci.org/viart/grunt-connect-rewrite)
 
 > This plugin provides RewriteRules middleware for the Grunt Connect / Express.
 > Which could be used to redirect (rewrite internally or redirect using HTTP codes) User to the specific URL based on RegExp Rules.
+
+## More flexible alternative
+In case you like this plugin it makes sense to look at [http-rewrite-middleware](https://github.com/viart/http-rewrite-middleware)
+as more flexible alternative.
 
 ## Getting Started
 This plugin requires Grunt `~0.4.1`
@@ -82,11 +86,25 @@ grunt.initConfig({
         development: {
             options: {
                 middleware: function (connect, options) {
-                    return [
-                        rewriteRulesSnippet, // RewriteRules support
-                        connect.static(require('path').resolve(options.base)) // mount filesystem
-                        // ... any other middleware
-                    ];
+                    var middlewares = [];
+
+                    // RewriteRules support
+                    middlewares.push(rewriteRulesSnippet);
+
+                    if (!Array.isArray(options.base)) {
+                        options.base = [options.base];
+                    }
+
+                    var directory = options.directory || options.base[options.base.length - 1];
+                    options.base.forEach(function (base) {
+                        // Serve static files.
+                        middlewares.push(connect.static(base));
+                    });
+
+                    // Make directory browse-able.
+                    middlewares.push(connect.directory(directory));
+
+                    return middlewares;
                 }
             }
         }
@@ -105,12 +123,16 @@ grunt.registerTask('server', function (target) {
 });
 ```
 
+### Debugging rules
+
+In order to debug Rules you need to run grunt with a `--verbose` command-line option this will enable logging of matched rules.
+The message will explain which `__from__` rule was matched and what was the result of the rewrite.
+
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+* 2014.01.29 `v0.2.1` Add logging support
 * 2013.11.21 `v0.2.0` Add support for Browser's redirects (HTTP 301/302)
 * 2013.07.27 `v0.1.1` Add possibility to read settings from custom grunt config path
 * 2013.04.12 `v0.1.0` Initial Release
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/viart/grunt-connect-rewrite/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
