@@ -11,7 +11,7 @@
 var utils = require('../lib/utils');
 
 module.exports = function (grunt) {
-    grunt.registerTask('configureRewriteRules', 'Configure connect rewriting rules.', function () {
+    grunt.registerMultiTask('configureRewriteRules', 'Configure connect rewriting rules.', function () {
         var options = this.options({
             rulesProvider: 'connect.rules'
         });
